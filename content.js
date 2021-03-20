@@ -10,7 +10,7 @@ $(function () {
         $(myAlbumUrls).each(function(index2, myAlbumUrl) {
             const myUrl = myAlbumUrl[1];
             if(targetUrl === myUrl) {
-                $(album).css('filter', 'opacity(30%)');
+                $(album).css('filter', 'opacity(20%)');
             }
         });
     });
