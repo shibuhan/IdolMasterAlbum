@@ -34,7 +34,7 @@ function getCSV(url){
  * @param str text形式で読み込んだCSVファイル
  */
 function convertCSVtoArray(str){
-    var row = str.split("\n");
+    var row = str.split(/\r\n|\n/);
     for(var i=0;i<row.length-1;++i){
         myAlbumUrls[i] = row[i+1].split(',');
     }
