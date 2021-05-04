@@ -10,5 +10,13 @@
       "jquery-3.5.0.min.js",
       "content.js"
     ]
-  }]
+  }],
+  "permissions" : [
+		"contextMenus"
+  ],
+  "background" : {
+    "scripts" : [
+      "jquery-3.5.0.min.js",
+      "background.js"]
+  }
 }
