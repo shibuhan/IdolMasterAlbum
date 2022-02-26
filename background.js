@@ -27,8 +27,6 @@ chrome.contextMenus.onClicked.addListener(function(item, tab){
             title = title.substring(titleRemoveLength + titleRemovePart.length).trim();
         }
         
-        console.log(title);
-        console.log(albumUrl);
-        console.log('------------------------------');
+        alert(title + "," + albumUrl);
     });
 });
