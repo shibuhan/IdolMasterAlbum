@@ -1,19 +1,22 @@
-const csvUrl = location.host === 'columbia.jp' ? 'myAlbums_columbia.csv' : 'myAlbums_lantis.csv';
+const csvUrlBase = "https://raw.githubusercontent.com/shibuhan/IdolMasterAlbum/makkoi/";
+const csvUrl = csvUrlBase + (location.host === 'columbia.jp' ? 'myAlbums_columbia.csv' : 'myAlbums_lantis.csv');
 const targetClass = location.host === 'columbia.jp' ? 'img.jacketLink' : 'img.hv';
 
 var myAlbumUrls = [];
-getCSV(csvUrl);
 
 $(function () {
-    $(targetClass).each(function(index, album) {
-        const targetUrl = $(album).attr('src');
-        $(myAlbumUrls).each(function(index2, myAlbumUrl) {
-            const myUrl = myAlbumUrl[1];
-            if(targetUrl === myUrl) {
-                $(album).css('filter', 'opacity(20%)');
-            }
+    getCSV(csvUrl).done(function(csv){
+        convertCSVtoArray(csv);
+        $(targetClass).each(function(index, album) {
+            const targetUrl = $(album).attr('src');
+            $(myAlbumUrls).each(function(index2, myAlbumUrl) {
+                const myUrl = myAlbumUrl[1];
+                if(targetUrl === myUrl) {
+                    $(album).css('filter', 'opacity(20%)');
+                }
+            });
         });
-    });
+    })
 });
 
 /**
@@ -21,12 +24,12 @@ $(function () {
  * @param url CSVファイルの相対パス
  */
 function getCSV(url){
-    var req = new XMLHttpRequest();
-    req.open('GET', chrome.extension.getURL(url), true);
-    req.send(null);
-    req.onload = function(){
-        convertCSVtoArray(req.responseText);
-    }
+    return $.ajax({
+        url: url,
+        type: 'get',
+        dataType:'text',
+        cache:false
+    });
 }
 
 /**
