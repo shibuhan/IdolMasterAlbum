@@ -1,9 +1,8 @@
 {
   "name": "IdolMasterAlbum",
   "version": "1.0.0",
-  "manifest_version": 2,
+  "manifest_version": 3,
   "description": "IdolMasterAlbum",
-  "web_accessible_resources": ["myAlbums_columbia.csv","myAlbums_lantis.csv"],
   "content_scripts": [{
     "matches": ["https://columbia.jp/idolmaster/*","http://www.lantis.jp/imas/*","https://www.lantis.jp/imas/*"],
     "js": [
@@ -15,7 +14,7 @@
 		"contextMenus"
   ],
   "background" : {
-    "scripts" : [
+    "background.service_worker" : [
       "jquery-3.5.0.min.js",
       "background.js"]
   }
