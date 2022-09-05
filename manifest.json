@@ -7,15 +7,14 @@
     "matches": ["https://columbia.jp/idolmaster/*","http://www.lantis.jp/imas/*","https://www.lantis.jp/imas/*"],
     "js": [
       "jquery-3.5.0.min.js",
-      "content.js"
+      "content.js",
+      "correspondence.js"
     ]
   }],
   "permissions" : [
-		"contextMenus"
+		"activeTab","scripting","contextMenus"
   ],
   "background" : {
-    "background.service_worker" : [
-      "jquery-3.5.0.min.js",
-      "background.js"]
+    "service_worker" : "background.js"
   }
 }

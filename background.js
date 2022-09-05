@@ -1,32 +1,25 @@
-const domein_lantis = "https://www.lantis.jp/imas/";
-const domein_columbia = "https://columbia.jp/idolmaster/";
-const titleRemovePart = "THE IDOLM@STER";
+chrome.runtime.onInstalled.addListener(() => {
+    chrome.contextMenus.create({
+        id: 'menu_csv_send',
+        title: 'csv追加',
+        contexts: ['link'],
+        type: 'normal',
+        documentUrlPatterns : ['https://columbia.jp/idolmaster/*','http://www.lantis.jp/imas/*','https://www.lantis.jp/imas/*']
+    });
 
-chrome.contextMenus.create({
-    title: "csvに追加",
-    contexts: ["image"],
-    type: "normal",
-    documentUrlPatterns : ["https://columbia.jp/idolmaster/*","http://www.lantis.jp/imas/*","https://www.lantis.jp/imas/*"]
+    chrome.contextMenus.create({
+        id: 'menu_csv_update',
+        title: 'csv更新',
+        contexts: ['link'],
+        type: 'normal',
+        documentUrlPatterns : ['https://columbia.jp/idolmaster/*','http://www.lantis.jp/imas/*','https://www.lantis.jp/imas/*']
+    });
 });
 
 chrome.contextMenus.onClicked.addListener(function(item, tab){
-    const albumUrl = item.srcUrl.substring(item.pageUrl.length);
-    $.ajax({
-        type:"get",
-        url: item.linkUrl,
-    }).done(function(data){
-        let title;
-        if (item.pageUrl === domein_columbia) {
-            title = data.match(/<title>(.*)<\/title>/)[1];
-        } else if (item.pageUrl === domein_lantis) {
-            title = $($.parseHTML(data)).find('.titles').find('h2').text();
-        }
-        
-        const titleRemoveLength = title.indexOf(titleRemovePart);
-        if (titleRemoveLength != -1) {
-            title = title.substring(titleRemoveLength + titleRemovePart.length).trim();
-        }
-        
-        alert(title + "," + albumUrl);
-    });
+    if (item.menuItemId === 'menu_csv_send') {
+        chrome.tabs.sendMessage(tab.id, {type: 'csv_send', item: item});
+    } else if (item.menuItemId === 'menu_csv_update') {
+        chrome.tabs.sendMessage(tab.id, {type: 'csv_update', item: null});
+    }
 });
