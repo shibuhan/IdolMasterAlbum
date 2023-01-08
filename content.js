@@ -1,7 +1,8 @@
 const csvUrlBase = "https://raw.githubusercontent.com/shibuhan/IdolMasterAlbum/makkoi/";
-const csvUrl = csvUrlBase + (location.host === 'columbia.jp' ? 'myAlbums_columbia.csv' : 'myAlbums_lantis.csv');
-const csvUrlNoNeed = csvUrlBase + (location.host === 'columbia.jp' ? 'myAlbums_columbia_noneed.csv' : 'myAlbums_lantis_noneed.csv');
-const targetClass = location.host === 'columbia.jp' ? 'img.jacketLink' : 'img.hv';
+const isLantis = location.host === 'columbia.jp';
+const csvUrl = csvUrlBase + (isLantis ? 'myAlbums_columbia.csv' : 'myAlbums_lantis.csv');
+const csvUrlNoNeed = csvUrlBase + (isLantis ? 'myAlbums_columbia_noneed.csv' : 'myAlbums_lantis_noneed.csv');
+const targetClass = isLantis ? 'img.jacketLink' : 'img.hv';
 
 $(async function () {
     const myAlbumUrls = convertCSVtoArray(await getCSV(csvUrl));
